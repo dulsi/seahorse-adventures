@@ -319,7 +319,7 @@ class Level:
                 r = s.rect
                 hits = []
                 for y in range(r.top-r.top%TH,r.bottom,TH):
-                    for x in range(r.left-r.left%TW,r.right,TW):
+                    for x in range(r.left-r.left%TW,r.right if (r.right//TW) < self.size[0] else self.size[0] * TW - 1,TW):
                         t = self.layer[y//TH][x//TW]
                         if t == None: continue
                         if not t.hit_groups.intersection(s.groups): continue

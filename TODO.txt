@@ -1,12 +1,4 @@
 ** POST DELUXE BUGS **
-  
-
-
-- in pekuja_1 in the secrect coin room at the bottom right corner
-    if you are shooting bubbles around the game can crash sometimes....
-    File "/home/phil/code/pyweek4/lib/level.py", line 321, in loop
-        t = self.layer[y/TH][x/TW]
-    IndexError: list index out of range
 
 
 
