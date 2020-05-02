@@ -1,10 +1,10 @@
 import pygame
 from pygame.locals import *
 
-from cnst import *
+from .cnst import *
 
-import tiles_basic
-from tile import *
+from . import tiles_basic
+from .tile import *
 
 # NOTE: If you add new tiles, use t_init for regular tiles.
 #       tl_init and tr_init are for tiles that take up only half of the

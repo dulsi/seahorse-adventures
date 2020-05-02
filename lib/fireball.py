@@ -1,9 +1,9 @@
 import pygame
 from pygame.locals import *
 
-import sprite
-import capsule
-import player
+from . import sprite
+from . import capsule
+from . import player
 
 def init(g,r,p, big=False):
     s = sprite.Sprite3(g,r,'fireball',(0,0,16,16))

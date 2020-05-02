@@ -1,9 +1,9 @@
 import pygame
 from pygame.locals import *
 
-import sprite
-import player
-from cnst import *
+from . import sprite
+from . import player
+from .cnst import *
 
 import random
 
@@ -73,7 +73,7 @@ def loop(g,s):
     else:
         s.idling = 240
         
-    s.image = 'fireguy-%s-%s' % (s.facing, (s.frame / 5) % 2)
+    s.image = 'fireguy-%s-%s' % (s.facing, (s.frame // 5) % 2)
     s.frame += 1
 
 def hit(g,a,b):

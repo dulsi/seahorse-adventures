@@ -1,19 +1,19 @@
-import player
-import spikey
-import platform
-import parrot
-import bubble
-import frog
-import tiles_basic
-import panda
-import door
-import fireguy
-import robo
-import brobo
-import laser
-import points
-import blob
-import shootbot
-import boss
-import fireball
-import capsule
+from . import player
+from . import spikey
+from . import platform
+from . import parrot
+from . import bubble
+from . import frog
+from . import tiles_basic
+from . import panda
+from . import door
+from . import fireguy
+from . import robo
+from . import brobo
+from . import laser
+from . import points
+from . import blob
+from . import shootbot
+from . import boss
+from . import fireball
+from . import capsule

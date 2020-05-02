@@ -1,8 +1,8 @@
 import pygame
 from pygame.locals import *
 
-import sprite
-import player
+from . import sprite
+from . import player
 
 def init(g,r,n,*params):
     s = sprite.Sprite3(g,r,3,(0,0,16,16))

@@ -1,11 +1,11 @@
 import pygame
 from pygame.locals import *
 
-import sprite
-import player
+from . import sprite
+from . import player
 #import laser
 
-from cnst import *
+from .cnst import *
 
 def init(g,r,n,facing,*params):
     s = sprite.Sprite3(g,r,'brobo-%s-0' % (facing),(0,0,30,37))
@@ -49,7 +49,7 @@ def loop(g,s):
         s.facing = 'right'
     elif s.vx < 0:
         s.facing = 'left'
-    s.image = 'brobo-%s-%s' % (s.facing, (g.frame/10)%2)
+    s.image = 'brobo-%s-%s' % (s.facing, (g.frame//10)%2)
 
     
     #if s.shoot == 0:

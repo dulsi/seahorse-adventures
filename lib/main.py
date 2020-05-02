@@ -12,11 +12,11 @@ import os
 import pygame
 from pygame.locals import *
 
-from pgu import timer
-from pgu import engine
+from .pgu import timer
+from .pgu import engine
 
-from cnst import *
-import data
+from .cnst import *
+from . import data
 
 class Input:
     def __init__(self):
@@ -85,7 +85,7 @@ class Game(engine.Game):
             self.screen = self._screen.convert().subsurface(0,0,SW,SH)
             
         pygame.font.init()
-        
+
         f_main = data.filepath(os.path.join('fonts','04B_20__.TTF'))
         f_scale = 0.35
         #f_main = data.filepath(os.path.join('fonts','04B_25__.TTF'))
@@ -106,7 +106,7 @@ class Game(engine.Game):
         
         self.fonts['pause'] = pygame.font.Font(f_main,int(36*f_scale))
         
-        import level
+        from . import level
         level.pre_load()
         
         try:
@@ -126,7 +126,7 @@ class Game(engine.Game):
             
             pygame.mixer.init()
         except:
-            print 'mixer not initialized'
+            print('mixer not initialized')
         
         self._music_name = None
         
@@ -137,7 +137,7 @@ class Game(engine.Game):
         
     def tick(self):
         r = self.timer.tick()
-        if r != None: print r
+        if r != None: print(r)
         
     def flip(self):
         if not self.lowres:
@@ -155,7 +155,7 @@ class Game(engine.Game):
                 
             # silly TV effect ...
             if '-tv' in sys.argv:
-                for y in xrange(0,SH*2,2):
+                for y in range(0,SH*2,2):
                     self._screen.fill((0,0,0),(0,y,SW*2,1))
             
         pygame.display.flip()
@@ -294,8 +294,8 @@ class Game(engine.Game):
 
 
 def main():
-    #print "Hello from your game's main()"
-    #print data.load('sample.txt').read()
+    #print("Hello from your game's main()")
+    #print(data.load('sample.txt').read())
     
     fname = None #data.filepath(os.path.join('levels','test.tga'))
     for v in sys.argv:
@@ -304,11 +304,11 @@ def main():
             
     g = Game()
     g.init()
-    import menu
+    from . import menu
     l = l2 = menu.Menu(g)
     #l = menu.Intro(g,l2)
     if fname != None:
-        import level
+        from . import level
         l = level.Level(g,fname,engine.Quit(g))
         
     g.run(l)

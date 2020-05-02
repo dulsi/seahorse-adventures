@@ -1,11 +1,11 @@
 import pygame
 from pygame.locals import *
 
-import sprite
-import player
-import laser
+from . import sprite
+from . import player
+from . import laser
 
-from cnst import *
+from .cnst import *
 
 def init(g,r,n,facing = 'left',*params):
     s = sprite.Sprite3(g,r,'shootbot-%s-0' % (facing),(0,0,18,24))
@@ -52,7 +52,7 @@ def loop(g,s):
         s.facing = 'right'
     elif s.vx < 0.0:
         s.facing = 'left'
-    s.image = 'shootbot-%s-%s' % (s.facing, (g.frame / 10) % 4)
+    s.image = 'shootbot-%s-%s' % (s.facing, (g.frame // 10) % 4)
 
     if sprite.get_code(g,s,sign(s.vx),0) == CODE_SHOOTBOT_TURN:
         s.vx = 0.0

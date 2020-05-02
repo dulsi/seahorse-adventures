@@ -1,8 +1,8 @@
 import pygame
 from pygame.locals import *
 
-import player
-import sprite
+from . import player
+from . import sprite
 
 def init(g,r,p):
     s = sprite.Sprite3(g,r,'laser',(0,0,4,2))
@@ -26,7 +26,7 @@ def init(g,r,p):
     if p.facing == 'left':
         s.vx = -1
     s.vy = 0
-    s.rect.centerx += s.vx*(6+s.rect.width/2)
+    s.rect.centerx += s.vx*(6+s.rect.width//2)
     s.rect.centery -= 2
     
     return s

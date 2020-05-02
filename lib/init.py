@@ -1,6 +1,6 @@
-from cnst import *
+from .cnst import *
 
-import tiles
+from . import tiles
 
 #def bounds(g,r,n,*params):
     #pos = r.centerx/TW,r.centery/TH
@@ -9,13 +9,13 @@ import tiles
     
 
 def init_bkgr(g,r,n):
-    x,y = r.centerx/TW,r.centery/TH
+    x,y = r.centerx//TW,r.centery//TH
     n = g.data[2][y][x+1]
     g.set_bkgr('%x.png'%n)
     
     
 def init_music(g,r,n):
-    x,y = r.centerx/TW,r.centery/TH
+    x,y = r.centerx//TW,r.centery//TH
     n = g.data[2][y][x+1]
     #print 'play music',n
     g.game.music_play('%s'%n)

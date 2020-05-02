@@ -3,7 +3,7 @@ from pygame.locals import *
 
 #import random
 
-import sprite
+from . import sprite
 
 def init(g,r):
     #print 'new capsule bubble'

@@ -5,22 +5,22 @@ import os
 import pygame
 from pygame.locals import *
 
-from cnst import *
+from .cnst import *
 
-import data
+from . import data
 
-import tiles
-import codes
-import menu
-import levels
+from . import tiles
+from . import codes
+from . import menu
+from . import levels
 
 def load_level(fname):
     img = pygame.image.load(fname)
-    #return [[[img.get_at((x,y))[n] for x in xrange(0,img.get_width())] for y in xrange(0,img.get_height())] for n in xrange(0,4)]
+    #return [[[img.get_at((x,y))[n] for x in range(0,img.get_width())] for y in range(0,img.get_height())] for n in range(0,4)]
     w,h = img.get_width(),img.get_height()
-    l = [[[0 for x in xrange(0,w)] for y in xrange(0,h)] for n in xrange(0,3)]
-    for y in xrange(0,h):
-        for x in xrange(0,w):
+    l = [[[0 for x in range(0,w)] for y in range(0,h)] for n in range(0,3)]
+    for y in range(0,h):
+        for x in range(0,w):
             r,g,b,a = img.get_at((x,y))
             l[0][y][x] = r
             l[1][y][x] = g
@@ -29,8 +29,8 @@ def load_level(fname):
     
 def load_tiles(fname):
     img = pygame.image.load(fname).convert_alpha()
-    w,h = img.get_width()/TW,img.get_height()/TH
-    return [img.subsurface((n%w)*TW,(n/w)*TH,TW,TH) for n in xrange(0,w*h)]
+    w,h = img.get_width()//TW,img.get_height()//TH
+    return [img.subsurface((n%w)*TW,(n//w)*TH,TW,TH) for n in range(0,w*h)]
 
 def load_images(dname):
     r = {}
@@ -42,11 +42,11 @@ def load_images(dname):
             relative_root += '/'
         if relative_root.startswith('/'):
             relative_root = relative_root[1:]
-        #print relative_root
+        #print(relative_root)
         for a in files:
             parts = a.split('.')
             if parts[0] == '' or len(parts) != 2: continue
-            #print 'loading image',a
+            #print('loading image',a)
             
             key = relative_root + parts[0]
             img = pygame.image.load(os.path.join(root,a)).convert_alpha() 
@@ -54,12 +54,12 @@ def load_images(dname):
             
             if 'left' in key:
                 key = key.replace('left','right')
-                #print 'creating flipped image',key
+                #print('creating flipped image',key)
                 img = pygame.transform.flip(img,1,0)
                 r[key] = img
             elif 'right' in key:
                 key = key.replace('right','left')
-                #print 'creating flipped image',key
+                #print('creating flipped image',key)
                 img = pygame.transform.flip(img,1,0)
                 r[key] = img
             
@@ -96,11 +96,11 @@ class Level:
         img = pygame.Surface((1,1)).convert_alpha()
         img.fill((0,0,0,0))
         self.images[None] = img
-        for n in xrange(0,len(self._tiles)): self.images[n] = self._tiles[n]
+        for n in range(0,len(self._tiles)): self.images[n] = self._tiles[n]
         
-        import tiles
+        from . import tiles
         self._images = []
-        for m in xrange(0,IROTATE):
+        for m in range(0,IROTATE):
             r = dict(self.images)
             #for n,i,t in tiles.TANIMATE:
                 #n2 = n+(m/t)%i
@@ -127,22 +127,22 @@ class Level:
         self.codes = {}
         
         # initialize all the tiles ...
-        self.layer = [[None for x in xrange(0,self.size[0])] for y in xrange(0,self.size[1])]
+        self.layer = [[None for x in range(0,self.size[0])] for y in range(0,self.size[1])]
          
-        for y in xrange(0,self.size[1]):
+        for y in range(0,self.size[1]):
             l = self.data[0][y]
-            for x in xrange(0,self.size[0]):
+            for x in range(0,self.size[0]):
                 n = l[x]
                 #n1 = self.data[1][y][x]
                 #if n1:
-                    #print 'warning place background tiles in the foreground',x,y,n1
+                    #print('warning place background tiles in the foreground',x,y,n1)
                     #if n == 0: n = n1
                 if not n: continue
                 tiles.t_put(self,(x,y),n)
         
-        for y in xrange(0,self.size[1]):
+        for y in range(0,self.size[1]):
             l = self.data[2][y]
-            for x in xrange(0,self.size[0]):
+            for x in range(0,self.size[0]):
                 n = l[x]
                 if not n: continue
                 codes.c_init(self,(x,y),n)
@@ -163,9 +163,9 @@ class Level:
                 
     def run_codes(self,r):
         #r.clamp_ip(self.bounds)
-        for y in xrange(r.top/TH,r.bottom/TH):
+        for y in range(r.top//TH,r.bottom//TH):
             if y < 0 or y >= self.size[1]: continue
-            for x in xrange(r.left/TW,r.right/TW):
+            for x in range(r.left//TW,r.right//TW):
                 if x < 0 or x >= self.size[0]: continue 
                 if (x,y) not in self.codes:
                     n = self.data[2][y][x]
@@ -245,12 +245,12 @@ class Level:
         bg = self.data[1]
         
         images = self._images[self.frame%IROTATE]
-        for y in xrange(v.top-v.top%TH,v.bottom,TH):
-            for x in xrange(v.left-v.left%TW,v.right,TW):
-                n = bg[y/TH][x/TW]
+        for y in range(v.top-v.top%TH,v.bottom,TH):
+            for x in range(v.left-v.left%TW,v.right,TW):
+                n = bg[y//TH][x//TW]
                 if n:
                     screen.blit(images[n],(x-v.left,y-v.top))
-                s = self.layer[y/TH][x/TW]
+                s = self.layer[y//TH][x//TW]
                 if s != None and s.image:
                     screen.blit(images[s.image],(x-v.left,y-v.top))
                 
@@ -260,7 +260,7 @@ class Level:
             else:
                 w=images[s.image].get_width()
                 top=s.rect.y-s.shape.y-v.y-images[s.image].get_height() / 2 * s.exploded; 
-                for ty in xrange(0,images[s.image].get_height()):
+                for ty in range(0,images[s.image].get_height()):
                     screen.blit(images[s.image],(s.rect.x-s.shape.x-v.x,top+ty*(1+s.exploded)),(0,ty,w,1))
                     
                     
@@ -318,15 +318,15 @@ class Level:
                 if not len(s.groups): continue
                 r = s.rect
                 hits = []
-                for y in xrange(r.top-r.top%TH,r.bottom,TH):
-                    for x in xrange(r.left-r.left%TW,r.right,TW):
-                        t = self.layer[y/TH][x/TW]
+                for y in range(r.top-r.top%TH,r.bottom,TH):
+                    for x in range(r.left-r.left%TW,r.right,TW):
+                        t = self.layer[y//TH][x//TW]
                         if t == None: continue
                         if not t.hit_groups.intersection(s.groups): continue
                         dist = abs(t.rect.centerx-s.rect.centerx)+abs(t.rect.centery-s.rect.centery)
                         hits.append([dist,t])
                             
-                hits.sort()
+                hits.sort(key=lambda x: x[0])
                 for dist,t in hits:
                     if not t.rect.colliderect(s.rect): continue
                     t.hit(self,t,s)
@@ -342,7 +342,7 @@ class Level:
                         s.deinit(self,s)
                     if hasattr(s,'_code'):
                         if s._code not in self.codes:
-                            print 'error in code GC',s._code
+                            print('error in code GC',s._code)
                             continue
                         del self.codes[s._code]
                             
@@ -354,11 +354,11 @@ class Level:
         self.frame += 1
         if (self.frame%FPS)==0:
             pass
-            #print self.player.rect.bottom
-            #print '' 
-            #print 'frame:',self.frame
-            #print 'sprites:',len(self.sprites)
-            #print 'codes:',len(self.codes)
+            #print(self.player.rect.bottom)
+            #print('')
+            #print('frame:',self.frame)
+            #print('sprites:',len(self.sprites))
+            #print('codes:',len(self.codes))
             
         #handle various game status'
         if self.status == '_first':
@@ -426,7 +426,7 @@ class Level:
         blit(img,(x,y)) ; blit(img,(x,y))
         
         #text = 'LIVES: %d'%self.game.lives
-        for i in xrange(self.game.lives):
+        for i in range(self.game.lives):
             img = self.images[0x0C] # the extra life tile
             x,y = SW-1.05*img.get_width()*i - img.get_width() - pad, pad
             blit(img, (x, y))

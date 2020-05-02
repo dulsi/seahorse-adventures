@@ -1,8 +1,8 @@
 import pygame
 from pygame.locals import *
 
-import sprite
-import capsule
+from . import sprite
+from . import capsule
 
 def init(g,r,p, big=False):
     if not hasattr(g,'bubble_count'):
@@ -33,7 +33,7 @@ def init(g,r,p, big=False):
     if p.facing == 'left':
         s.vx = -1
     s.vy = 0
-    s.rect.centerx += s.vx*(6+s.rect.width/2)
+    s.rect.centerx += s.vx*(6+s.rect.width//2)
     s.rect.centery -= 4
     
     g.game.sfx['bubble'].play()

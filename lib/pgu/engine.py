@@ -77,12 +77,12 @@ class Game:
         if not hasattr(s,f): return 0
         f = getattr(s,f)
         #try:
-    	if v != None: r = f(v)
-	else: r = f()
-   	if r != None:
-	    self.state = r
-   	    self.state._paint = 1
-	    return 1
+        if v != None: r = f(v)
+        else: r = f()
+        if r != None:
+            self.state = r
+            self.state._paint = 1
+            return 1
         #except:
         #    import traceback; traceback.print_exc()
             
@@ -122,8 +122,8 @@ class Game:
         
         for e in pygame.event.get():
             #NOTE: this might break API?
-	    #if self.event(e): return
-	    if not self.event(e):
+        #if self.event(e): return
+            if not self.event(e):
                 if self.fnc('event',e): return
             
         self.tick()

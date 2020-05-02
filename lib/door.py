@@ -1,19 +1,19 @@
 import pygame
 from pygame.locals import *
 
-from cnst import *
+from .cnst import *
 
-import sprite
-import player
+from . import sprite
+from . import player
 
 def init(g,r,n,hidden = False,*params):
     s = sprite.Sprite3(g,r,'door-1',(0,0,16,24)) #3
     s.rect.centerx = r.centerx
-    s.rect.centery = r.centery - (24 - 16) / 2
+    s.rect.centery = r.centery - (24 - 16) // 2
     s.loop = loop
     s.hit = sprite_hit
     s.frame = 0
-    s.open = None
+    s.open = 0
     s.hit_groups.add('player')
     s.hidden = hidden
     if hidden:
@@ -34,7 +34,7 @@ def loop(g,s):
         s.image = 'door-2'
     else:
         s.image = 'door-1'
-    s.open = None
+    s.open = 0
     s.frame += 1
 
 def sprite_hit(g,a,b):
@@ -44,7 +44,7 @@ def hit(g,pos,b):
     
     cx,cy = pos
     
-    import sprite
+    from . import sprite
     #n_code = sprite.get_code(g,a,1,0)
     dx = 1
     while g.data[2][cy][cx+dx] in DOOR_CODES: dx += 1
@@ -56,8 +56,8 @@ def hit(g,pos,b):
     
     w,h = g.size
     xx,yy = cx,cy
-    for y in xrange(0,h):
-        for x in xrange(0,w):
+    for y in range(0,h):
+        for x in range(0,w):
             if layer[y][x] in DOOR_CODES and layer[y][x-1] == n_code:
                 xx,yy = x,y
     

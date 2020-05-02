@@ -3,13 +3,13 @@ import os
 import pygame
 from pygame.locals import *
 
-from pgu import engine
+from .pgu import engine
 
-import data
+from . import data
 
-from cnst import *
+from .cnst import *
 
-import levels
+from . import levels
 
 class Menu(engine.State):
     def __init__(self,game):
@@ -60,9 +60,9 @@ class Menu(engine.State):
         #c =(0,0,0)
         #text = TITLE
         #img = fnt.render(text,1,c)
-        #screen.blit(img,((SW-img.get_width())/2,y))
+        #screen.blit(img,((SW-img.get_width())//2,y))
         
-        screen.blit(self.logo,((SW-self.logo.get_width())/2,y))
+        screen.blit(self.logo,((SW-self.logo.get_width())//2,y))
         #y += 48
         y = 132
         
@@ -71,7 +71,7 @@ class Menu(engine.State):
         text = 'high: %05d'%self.game.high
         c = (0x00,0x00,0x00)
         img = fnt.render(text,1,c)
-        x = (SW-img.get_width())/2
+        x = (SW-img.get_width())//2
         screen.blit(img,(x+1,y+1))
         c = (0xff,0xff,0xff)
         img = fnt.render(text,1,c)
@@ -80,12 +80,12 @@ class Menu(engine.State):
         y += 24
         
         x = 90
-        for n in xrange(0,len(self.items)):
+        for n in range(0,len(self.items)):
             text,value = self.items[n]
             text = text.replace('L',self.levels[self.game.lcur][1])
             c = (0x00,0x00,0x00)
             img = fnt.render(text,1,c)
-            x = (SW-img.get_width())/2
+            x = (SW-img.get_width())//2
             screen.blit(img,(x+1,y+1))
             c = (0xff,0xff,0xff)
             if n == self.cur: c = (0xaa,0xaa,0xaa)
@@ -98,7 +98,7 @@ class Menu(engine.State):
         text = 'www.imitationpickles.org'
         c = (0x00,0x00,0x00)
         img = fnt.render(text,1,c)
-        x = (SW-img.get_width())/2
+        x = (SW-img.get_width())//2
         y = SH-(img.get_height()+4)
         screen.blit(img,(x+1,y+1))
         c = (0xff,0xff,0xff)
@@ -137,12 +137,12 @@ class Menu(engine.State):
             if value == 'start':
                 self.game.init_play()
                 self.game.lcur = 0
-                import level
+                from . import level
                 l =  level.Level(self.game,None,self)
                 return Transition(self.game,l)
             elif value == 'play':
                 self.game.init_play()
-                import level
+                from . import level
                 l =  level.Level(self.game,None,self)
                 return Transition(self.game,l)
             elif value == 'quit':
@@ -190,17 +190,17 @@ class Transition(engine.State):
     def paint(self,screen):
         f = self.frame
         t = self.total
-        t2 = t/2
+        t2 = t//2
         
         if f < t2:
             i = self.s1
-            w = max(2,SW * (t2-f) / t2)
-            i = pygame.transform.scale(i,(w,SH*w/SW))
+            w = max(2,SW * (t2-f) // t2)
+            i = pygame.transform.scale(i,(w,SH*w//SW))
         else:
             f = t2-(f-t2)
             i = self.s2
-            w = max(2,SW * (t2-f) / t2)
-            i = pygame.transform.scale(i,(w,SH*w/SW))
+            w = max(2,SW * (t2-f) // t2)
+            i = pygame.transform.scale(i,(w,SH*w//SW))
             
         i = pygame.transform.scale(i,(SW,SH))
         
@@ -248,7 +248,7 @@ class Intro(engine.State):
             a = 255
             if f > FPS*2:
                 screen.blit(self.moon,(0,0))
-                a = 255- ((f-FPS*2)*255/(FPS*2))
+                a = 255- ((f-FPS*2)*255//(FPS*2))
                 self.black.set_alpha(a)
                 screen.blit(self.black,(0,0))
 
@@ -262,7 +262,7 @@ class Intro(engine.State):
                 screen.blit(img,(x,y))
                 y += 36
             if f < FPS:
-                a = 255-(f*255/FPS)
+                a = 255-(f*255//FPS)
                 self.black.set_alpha(a)
                 screen.blit(self.black,(0,0))
         
@@ -277,7 +277,7 @@ class Intro2(engine.State):
         self.moon = pygame.image.load(data.filepath(os.path.join('intro','moon2.png'))).convert()
         img = pygame.image.load(data.filepath(os.path.join('images','player','right.png')))
         w = 160
-        self.player = pygame.transform.scale(img,(w,img.get_height()*w/img.get_width()))
+        self.player = pygame.transform.scale(img,(w,img.get_height()*w//img.get_width()))
         
         self.bkgr = pygame.image.load(data.filepath(os.path.join('bkgr','2.png')))
          
@@ -331,7 +331,7 @@ class Prompt(engine.State):
         fnt = self.font
         c = (255,255,255)
         img = fnt.render(text,1,(0,0,0))
-        x,y = (SW-img.get_width())/2,(SH-img.get_height())/2
+        x,y = (SW-img.get_width())//2,(SH-img.get_height())//2
         screen.blit(img,(x+2,y+2))
         img = fnt.render(text,1,c)
         screen.blit(img,(x,y))
@@ -358,7 +358,7 @@ class Pause(engine.State):
         fnt = self.font
         c = (255,255,255)
         img = fnt.render(text,1,(0,0,0))
-        x,y = (SW-img.get_width())/2,(SH-img.get_height())/2
+        x,y = (SW-img.get_width())//2,(SH-img.get_height())//2
         screen.blit(img,(x+2,y+2))
         img = fnt.render(text,1,c)
         screen.blit(img,(x,y))
@@ -410,7 +410,7 @@ class Credits(engine.State):
             ]:
             c = (255,255,255)
             img = fnt.render(text,1,(0,0,0))
-            x = (SW-img.get_width())/2
+            x = (SW-img.get_width())//2
             screen.blit(img,(x+2,y+2))
             img = fnt.render(text,1,c)
             screen.blit(img,(x,y))
@@ -463,7 +463,7 @@ class Help(engine.State):
             ]:
             c = (255,255,255)
             img = fnt.render(text,1,(0,0,0))
-            x = (SW-img.get_width())/2
+            x = (SW-img.get_width())//2
             screen.blit(img,(x+2,y+2))
             img = fnt.render(text,1,c)
             screen.blit(img,(x,y))

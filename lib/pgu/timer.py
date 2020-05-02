@@ -13,7 +13,7 @@ class Timer:
         if fps == 0: 
             self.tick = self._blank
             return
-        self.wait = 1000/fps
+        self.wait = 1000//fps
         self.nt = pygame.time.get_ticks()
         pygame.time.wait(0)
         

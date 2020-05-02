@@ -1,11 +1,11 @@
 import pygame
 from pygame.locals import *
 
-from cnst import *
+from .cnst import *
 
-import sprites
-import sprite
-import player
+from . import sprites
+from . import sprite
+from . import player
 
 import math
 import random
@@ -52,20 +52,20 @@ def init(g,r,n,*params):
 def loop(g,s):
     #if s.dying == None: s.dying = 1
     if s.dying != None:
-        s.image = 'boss/%s-%d'%(s.facing,(g.frame/(FPS/8))%8)
+        s.image = 'boss/%s-%d'%(s.facing,(g.frame//(FPS//8))%8)
         if s.dying % 15 == 0:
             g.game.sfx['boss_explode'].play()
         if s.dying % 15 > 10:
-            s.image = 'boss/%s-damage-%d'%(s.facing,(g.frame/(FPS/8))%8)
+            s.image = 'boss/%s-damage-%d'%(s.facing,(g.frame//(FPS//8))%8)
         s.dying += 1
         
-        mid_frame = FPS*3/2
-        end_frame = FPS*6/2
+        mid_frame = FPS*3//2
+        end_frame = FPS*6//2
         
         if s.dying == mid_frame:
             # explode
             g.game.sfx['pop'].play()
-            for n in xrange(0,128):
+            for n in range(0,128):
                 r = pygame.Rect(random.randint(s.rect.left,s.rect.right),random.randint(s.rect.top,s.rect.bottom),1,1)
                 s2 = bub_init(g,r)
                 
@@ -98,10 +98,10 @@ def loop(g,s):
     s.rect.x += sprite.myinc(g.frame, s.vx)
     s.rect.y += sprite.myinc(g.frame, s.vy)
     
-    s.image = 'boss/%s-%d'%(s.facing,(g.frame/(FPS/8))%8)
+    s.image = 'boss/%s-%d'%(s.facing,(g.frame//(FPS//8))%8)
     if s.taking_damage > 0:
         if s.taking_damage % 20 > 10:
-            s.image = 'boss/%s-damage-%d'%(s.facing,(g.frame/(FPS/8))%8)
+            s.image = 'boss/%s-damage-%d'%(s.facing,(g.frame//(FPS//8))%8)
         s.taking_damage -= 1
 
     s.phase_frames += 1

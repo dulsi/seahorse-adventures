@@ -1,11 +1,11 @@
 import pygame
 from pygame.locals import *
 
-from cnst import *
+from .cnst import *
 
-import sprite
-import tiles
-import player
+from . import sprite
+from . import tiles
+from . import player
 
 def init(g,r,n,vx,*params):
     s = sprite.Sprite3(g,r,'frog/walk-right-0',(8,4,8,18)) #(1,1,22,22))

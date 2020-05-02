@@ -1,10 +1,10 @@
 import pygame
 from pygame.locals import *
 
-from cnst import *
+from .cnst import *
 
-import sprite
-import player
+from . import sprite
+from . import player
 
 def init(g,r,v):
     s = sprite.Sprite2(g,r,'points/%d'%v) #3

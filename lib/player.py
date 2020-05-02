@@ -1,10 +1,10 @@
 import pygame
 from pygame.locals import *
 
-from cnst import *
-import sprite
-import sprites
-import tiles
+from .cnst import *
+from . import sprite
+from . import sprites
+from . import tiles
 
 def init(g,r,n,*params):
     s = sprite.Sprite3(g,r,'player/right',(6,8,15-6,27-8)) #(0,0,19,25))#(43-14,8,28,48))
@@ -74,7 +74,7 @@ def event(g,s,e):
                 #print "door!"
                 s.current_door.open = DOOR_DELAY
             s.image = None
-            s.door_pos = s.rect.centerx/TW,s.rect.centery/TH
+            s.door_pos = s.rect.centerx//TW,s.rect.centery//TH
             #tiles.t_put(g,(x,y), 0x32)
             #tiles.t_put(g,(x,y-1), 0x22)
     if e.type is USEREVENT and e.action == 'bubble':
@@ -99,7 +99,7 @@ def loop(g,s):
         s.groups = set()
         if not s.no_explode:
             s.exploded += 1
-            if s.exploded > FPS/2:
+            if s.exploded > FPS//2:
                 s.image = None
         else:
             s.image = None
@@ -125,7 +125,7 @@ def loop(g,s):
     if s.door_timer != None:
         if s.door_timer == 0:
             x,y = s.door_pos#s.rect.centerx/TW,s.rect.centery/TH
-            import door
+            from . import door
             #door.hit(g,g.layer[y][x],s)
             door.hit(g,(x,y),s)
             #tiles.t_put(g,(x,y), 0x30)
@@ -216,8 +216,8 @@ def loop(g,s):
     if n == CODE_EXIT:
         g.status = 'exit'
     if n == CODE_DOOR_AUTO:
-        x,y = s.rect.centerx/TW,s.rect.centery/TH
-        import door
+        x,y = s.rect.centerx//TW,s.rect.centery//TH
+        from . import door
         door.hit(g,(x,y),s)
 
     
@@ -228,8 +228,8 @@ def loop(g,s):
     if hasattr(g, 'boss'):
         #print g.boss.phase, g.boss.phase_frames
         if g.boss.phase == 2 and g.boss.phase_frames == 60:
-            for y in xrange(len(g.layer)):
-                for x in xrange(len(g.layer[y])):
+            for y in range(len(g.layer)):
+                for x in range(len(g.layer[y])):
                     if g.data[2][y][x] == CODE_BOSS_PHASE2_BLOCK:
                         tiles.t_put(g,(x,y),0x01) # solid tile
         if g.boss.dead:
@@ -242,11 +242,11 @@ def pan_screen(g,s):
     # adjust the view 
     border = pygame.Rect(s.rect)
     #pad = 100
-    pad = (SW/2)-TW
+    pad = (SW//2)-TW
     border.x -= pad
     border.w += pad*2
     #pad = 80
-    pad = (SH/2)-TH
+    pad = (SH//2)-TH
     if s.looking:
         pad = TH*2
     border.y -= pad

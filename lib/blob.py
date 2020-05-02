@@ -1,10 +1,10 @@
 import pygame
 from pygame.locals import *
 
-import sprite
-import player
+from . import sprite
+from . import player
 
-from cnst import *
+from .cnst import *
 
 def init(g,r,n,*params):
     s = sprite.Sprite3(g,r,'blob',(0,0,13,11))
