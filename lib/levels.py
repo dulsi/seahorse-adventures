@@ -1,20 +1,20 @@
 LEVELS = [
-    ('phil_1.tga',      'Jungle - 1',),
-    ('phil_7.tga',      'Jungle - 2',),
-    ('tim_2.tga',       'Jungle - 3',),
-    ('phil_2.tga',      'Jungle - 4',),
-    ('phil_13.tga',     'Jungle - 5',),
+    ('phil_1.tga',      'Jungle - 1', ['Defeat Jungle', 'Defeat Volcano', 'Defeat Moon', 'Defeat Boss'],),
+    ('phil_7.tga',      'Jungle - 2', ['Defeat Jungle', 'Defeat Volcano', 'Defeat Moon', 'Defeat Boss'],),
+    ('tim_2.tga',       'Jungle - 3', ['Defeat Jungle', 'Defeat Volcano', 'Defeat Moon', 'Defeat Boss'],),
+    ('phil_2.tga',      'Jungle - 4', ['Defeat Jungle', 'Defeat Volcano', 'Defeat Moon', 'Defeat Boss'],),
+    ('phil_13.tga',     'Jungle - 5', ['Defeat Jungle', 'Defeat Volcano', 'Defeat Moon', 'Defeat Boss'],),
     
-    ('pekuja_3.tga',    'Volcano - 1',),
-    ('tim_4.tga',       'Volcano - 2',),
-    ('phil_14.tga',     'Volcano - 3',),
-    ('phil_8.tga',      'Bonus',),
+    ('pekuja_3.tga',    'Volcano - 1', ['Defeat Volcano', 'Defeat Moon', 'Defeat Boss'],),
+    ('tim_4.tga',       'Volcano - 2', ['Defeat Volcano', 'Defeat Moon', 'Defeat Boss'],),
+    ('phil_14.tga',     'Volcano - 3', ['Defeat Volcano', 'Defeat Moon', 'Defeat Boss'],),
+    ('phil_8.tga',      'Bonus', ['Defeat Volcano', 'Defeat Moon', 'Defeat Boss'],),
     
-    ('phil_12.tga',     'Moon - 1',),
-    ('pekuja_1.tga',    'Moon - 2',),
-    ('phil_5.tga',      'Moon - 3',),
-    ('phil_10.tga',     'Moon - 4',),
-    ('boss_1.tga',      'Boss',),
+    ('phil_12.tga',     'Moon - 1', ['Defeat Moon', 'Defeat Boss'],),
+    ('pekuja_1.tga',    'Moon - 2', ['Defeat Moon', 'Defeat Boss'],),
+    ('phil_5.tga',      'Moon - 3', ['Defeat Moon', 'Defeat Boss'],),
+    ('phil_10.tga',     'Moon - 4', ['Defeat Moon', 'Defeat Boss'],),
+    ('boss_1.tga',      'Boss', ['Defeat Boss'],),
     
     #('phil_1.tga',      'Jungle - 1',), # jungle - easy
     #('phil_7.tga',      'Jungle - 2',), # jungle - medium 

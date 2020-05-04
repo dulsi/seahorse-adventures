@@ -5,6 +5,12 @@ import os
 import pygame
 from pygame.locals import *
 
+gamerzilla = None
+try:
+    import gamerzilla
+except ImportError:
+    pass
+
 from .cnst import *
 
 from . import data
@@ -84,8 +90,10 @@ class Level:
         #self._tiles = load_tiles(data.filepath('tiles.tga'))
         self._tiles = Level._tiles
         fname = self.fname
+        self.trophy = None
+        self.prev_trophy = None
         if fname == None:
-            fname,self.title = levels.LEVELS[self.game.lcur]
+            fname,self.title,self.trophy = levels.LEVELS[self.game.lcur]
             fname = data.filepath(os.path.join('levels',fname))
         else:
             self.title = os.path.basename(self.fname)
@@ -370,6 +378,14 @@ class Level:
             self.status = None
             return menu.Pause(self.game,'get ready',self)
         elif self.status == 'exit':
+            print("Exit")
+            print(gamerzilla)
+            print(self.trophy)
+            if gamerzilla is not None and self.trophy is not None:
+                for tr in self.trophy:
+                    found, cnt = gamerzilla.GamerzillaGetTrophyStat(self.game.game_id, tr)
+                    if found and cnt == self.game.lcur:
+                        gamerzilla.GamerzillaSetTrophyStat(self.game.game_id, tr, cnt + 1)
             self.game.lcur = (self.game.lcur + 1) % len(levels.LEVELS)
             if self.game.lcur == 0:
                 # you really won!!!

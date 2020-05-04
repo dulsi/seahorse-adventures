@@ -10,6 +10,13 @@ import sys
 import os
 
 import pygame
+
+gamerzilla = None
+try:
+    import gamerzilla
+except ImportError:
+    pass
+
 from pygame.locals import *
 
 from .pgu import timer
@@ -301,9 +308,32 @@ def main():
     for v in sys.argv:
         if '.tga' in v:
             fname = v
-            
+    game_id = None
+    if gamerzilla is None:
+        print("Gamerzilla support not available")
+    else:
+        data_home = os.getenv("XDG_DATA_HOME")
+        if data_home is None:
+            data_home = os.getenv("HOME")
+            if data_home is not None:
+                data_home = os.path.join(data_home, ".local/share")
+        if data_home is None:
+            data_home = ""
+        gamerzilla.GamerzillaInit(False, os.path.join(data_home, "seahorse-adventures") + "/")
+        seahorse = gamerzilla.Gamerzilla()
+        seahorse.short_name = "seahorse_adventures"
+        seahorse.name = "Seahorse Adventures"
+        seahorse.image = "data/gamerzilla/seahorse-adventures.png"
+        seahorse.version = 1
+        gamerzilla.GamerzillaGameAddTrophy(seahorse, "Defeat Jungle", "Defeat all jungle levels in order", 5, "data/gamerzilla/jungle1.png", "data/gamerzilla/jungle0.png")
+        gamerzilla.GamerzillaGameAddTrophy(seahorse, "Defeat Volcano", "Defeat all volcano and jungle levels in order", 9, "data/gamerzilla/volcano1.png", "data/gamerzilla/volcano0.png")
+        gamerzilla.GamerzillaGameAddTrophy(seahorse, "Defeat Moon", "Defeat all moon, volcano and jungle levels in order", 13, "data/gamerzilla/moon1.png", "data/gamerzilla/moon0.png")
+        gamerzilla.GamerzillaGameAddTrophy(seahorse, "Defeat Boss", "Defeat all levels and boss in order", 14, "data/gamerzilla/win1.png", "data/gamerzilla/win0.png")
+        game_id = gamerzilla.GamerzillaGameInit(seahorse)
+
     g = Game()
     g.init()
+    g.game_id = game_id
     from . import menu
     l = l2 = menu.Menu(g)
     #l = menu.Intro(g,l2)
@@ -312,4 +342,5 @@ def main():
         l = level.Level(g,fname,engine.Quit(g))
         
     g.run(l)
+    gamerzilla.GamerzillaQuit()
     pygame.quit()
