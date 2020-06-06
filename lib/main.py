@@ -319,8 +319,9 @@ def main():
                 data_home = os.path.join(data_home, ".local/share")
         if data_home is None:
             data_home = ""
-        gamerzilla.GamerzillaInit(False, os.path.join(data_home, "seahorse-adventures") + "/")
+        gamerzilla.GamerzillaStart(False, os.path.join(data_home, "seahorse-adventures") + "/")
         seahorse = gamerzilla.Gamerzilla()
+        gamerzilla.GamerzillaInitGame(seahorse)
         seahorse.short_name = "seahorse_adventures"
         seahorse.name = "Seahorse Adventures"
         seahorse.image = "data/gamerzilla/seahorse-adventures.png"
@@ -329,7 +330,7 @@ def main():
         gamerzilla.GamerzillaGameAddTrophy(seahorse, "Defeat Volcano", "Defeat all volcano and jungle levels in order", 9, "data/gamerzilla/volcano1.png", "data/gamerzilla/volcano0.png")
         gamerzilla.GamerzillaGameAddTrophy(seahorse, "Defeat Moon", "Defeat all moon, volcano and jungle levels in order", 13, "data/gamerzilla/moon1.png", "data/gamerzilla/moon0.png")
         gamerzilla.GamerzillaGameAddTrophy(seahorse, "Defeat Boss", "Defeat all levels and boss in order", 14, "data/gamerzilla/win1.png", "data/gamerzilla/win0.png")
-        game_id = gamerzilla.GamerzillaGameInit(seahorse)
+        game_id = gamerzilla.GamerzillaSetGame(seahorse)
 
     g = Game()
     g.init()
