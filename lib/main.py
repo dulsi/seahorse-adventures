@@ -343,5 +343,6 @@ def main():
         l = level.Level(g,fname,engine.Quit(g))
         
     g.run(l)
-    gamerzilla.GamerzillaQuit()
+    if not gamerzilla is None:
+        gamerzilla.GamerzillaQuit()
     pygame.quit()
