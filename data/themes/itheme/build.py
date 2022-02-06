@@ -7,7 +7,7 @@ import glob
 #([1...3],[1...3]) for the number of slices an image is cut into.
 IMAGES = {
     'box.png':(2,2),
-    'check.png':
+    'check.png':None,
     'color.png':None,
     'desktop.png':None,
     'dot.png':(2,2),
@@ -32,7 +32,7 @@ KEYWORDS = {
     'hover':('saturation',75),
     'normal':('saturation',0),
     #'down':('saturation',100),
-    'decor':('value':150),
+    'decor':('value',150),
     
     'vertical':('rotate',-90),
     }

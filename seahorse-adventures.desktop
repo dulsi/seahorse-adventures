@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Seahorse Adventures
+Comment=Help barbie the seahorse float on bubbles to the moon
+Exec=seahorse-adventures
+Icon=seahorse-adventures
+Terminal=false
+Type=Application
+Categories=Game;ActionGame;
+Keywords=Game;Retro;Platform;

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component type="desktop">
+	<id>seahorse-adventures.desktop</id>
+	<metadata_license>CC0-1.0</metadata_license>
+	<project_license>GPL-2.0+</project_license>
+	<name>Seahorse Adventures</name>
+	<summary>Help barbie the seahorse float on bubbles to the moon</summary>
+	<description>
+		<p>
+			Help barbie the seahorse float on bubbles to the moon in this retro side-scroller game.
+			Includes original soundtrack, graphics, and 15 levels!
+		</p>
+		<p>
+			Orinally created for pyweek 4, it won the "teams" category.
+		</p>
+	</description>
+	<url type="homepage">http://www.imitationpickles.org/barbie/</url>
+	<screenshots>
+		<screenshot type="default">http://www.imitationpickles.org/barbie/content/jungle.png</screenshot>
+		<screenshot>http://www.imitationpickles.org/barbie/content/volcano.png</screenshot>
+		<screenshot>http://www.imitationpickles.org/barbie/content/moon.png</screenshot>
+		<screenshot>http://www.imitationpickles.org/barbie/content/boss.png</screenshot>
+	</screenshots>
+	<content_rating type="oars-1.1">
+		<content_attribute id="violence-cartoon">moderate</content_attribute>
+	</content_rating>
+	<update_contact>jwrdegoede_at_fedoraproject.org</update_contact>
+</component>
