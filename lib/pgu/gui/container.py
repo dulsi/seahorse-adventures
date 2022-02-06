@@ -3,8 +3,8 @@
 import pygame
 from pygame.locals import *
 
-from const import *
-import widget, surface
+from .const import *
+from . import widget, surface
 
 class Container(widget.Widget):
     """The base container widget, can be used as a template as well as stand alone.
@@ -88,8 +88,8 @@ class Container(widget.Widget):
                 sub = surface.subsurface(s,w.rect)
                 ok = True
             except: 
-                print 'container.paint(): %s not in %s'%(w.__class__.__name__,self.__class__.__name__)
-                print s.get_width(),s.get_height(),w.rect
+                print('container.paint(): %s not in %s'%(w.__class__.__name__,self.__class__.__name__))
+                print(s.get_width(),s.get_height(),w.rect)
                 ok = False
             if ok: 
                 if not (hasattr(w,'_container_bkgr') and w._container_bkgr.get_width() == sub.get_width() and w._container_bkgr.get_height() == sub.get_height()):
@@ -185,7 +185,7 @@ class Container(widget.Widget):
                 used = w._event(sub)
                 
         if not used:
-            if e.type is KEYDOWN:
+            if e.type == KEYDOWN:
                 if e.key is K_TAB and self.myfocus:
                     if (e.mod&KMOD_SHIFT) == 0:
                         self.myfocus.next()
@@ -303,8 +303,8 @@ class Container(widget.Widget):
         
         if x == None or y == None: #auto center the window
             #w.style.x,w.style.y = 0,0
-            w.rect.x = (self.rect.w-w.rect.w)/2
-            w.rect.y = (self.rect.h-w.rect.h)/2
+            w.rect.x = (self.rect.w-w.rect.w)//2
+            w.rect.y = (self.rect.h-w.rect.h)//2
             #w.resize()
             #w._resize(self.rect.w,self.rect.h)
         else: #show it where we want it

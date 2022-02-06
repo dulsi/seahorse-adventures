@@ -2,11 +2,11 @@
 """
 import os
 
-from const import *
-import surface
-import container, table
-import group
-import basic, button, slider
+from .const import *
+from . import surface
+from . import container, table
+from . import group
+from . import basic, button, slider
 
 class SlideBox(container.Container):
     """A scrollable area with no scrollbars.
@@ -245,7 +245,7 @@ class ScrollArea(table.Table):
             hs.min = 0
             hs.max = widget.rect.w - box.style.width
             hs.style.width = box.style.width
-            hs.size = hs.style.width * box.style.width / max(1,widget.rect.w)
+            hs.size = hs.style.width * box.style.width // max(1,widget.rect.w)
         else:
             box.offset[0] = 0
             
@@ -254,7 +254,7 @@ class ScrollArea(table.Table):
             vs.min = 0
             vs.max = widget.rect.h - box.style.height
             vs.style.height = box.style.height
-            vs.size = vs.style.height * box.style.height / max(1,widget.rect.h)
+            vs.size = vs.style.height * box.style.height // max(1,widget.rect.h)
         else:
             box.offset[1] = 0
             
@@ -269,12 +269,12 @@ class ScrollArea(table.Table):
             if self.widget.rect.w <= self.sbox.rect.w:
                 self.hscrollbar.size = self.hscrollbar.style.width
             else:
-                self.hscrollbar.size = max(20,self.hscrollbar.style.width * self.sbox.rect.w / self.widget.rect.w)
+                self.hscrollbar.size = max(20,self.hscrollbar.style.width * self.sbox.rect.w // self.widget.rect.w)
             self._hscrollbar_changed(None)
         if self.widget.rect.h <= self.sbox.rect.h: 
             self.vscrollbar.size = self.vscrollbar.style.height
         else:
-            self.vscrollbar.size = max(20,self.vscrollbar.style.height * self.sbox.rect.h / self.widget.rect.h)
+            self.vscrollbar.size = max(20,self.vscrollbar.style.height * self.sbox.rect.h // self.widget.rect.h)
         self._vscrollbar_changed(None)
         return w,h
 
@@ -374,8 +374,8 @@ class List(ScrollArea):
         g.connect(CHANGE,self._change,None)
         self.value = self.group.value = None
 	
-	self.add = self._add
-	self.remove = self._remove
+        self.add = self._add
+        self.remove = self._remove
         
     def clear(self):
         """Clear the list.
@@ -413,7 +413,7 @@ class List(ScrollArea):
             """
         
     def _add(self, label, image = None, value=None):
-    	item = _List_Item(label,image=image,value=value)
+        item = _List_Item(label,image=image,value=value)
         self.table.tr()
         self.table.add(item)
         self.items.append(item)
@@ -421,8 +421,8 @@ class List(ScrollArea):
         item.group.add(item)
         
     def _remove(self, item):
-    	for i in self.items:
-		if i.value == item: item = i
+        for i in self.items:
+            if i.value == item: item = i
         if item not in self.items: return
         item.blur()
         self.items.remove(item)

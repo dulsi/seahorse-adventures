@@ -2,7 +2,7 @@
 """
 import pygame
 
-import style
+from . import style
 
 class Widget:
     """Template object - base for all widgets.
@@ -69,7 +69,7 @@ class Widget:
         self.cls = 'default'
         if 'cls' in params: self.cls = params['cls']
         if 'name' in params:    
-            import form
+            from . import form
             self.name = params['name']
             if hasattr(form.Form,'form') and form.Form.form != None: 
                 form.Form.form.add(self)
@@ -78,9 +78,9 @@ class Widget:
         self.pcls = ""
         
         if params['decorate'] != False:
-            import app
+            from . import app
             if not hasattr(app.App,'app'):
-                print 'gui.widget: creating an App'
+                print('gui.widget: creating an App')
                 app.App.app = app.App()
             app.App.app.theme.decorate(self,params['decorate'])
             
@@ -278,8 +278,8 @@ class Widget:
             fnc = con['fnc']
             values = list(con['values'])
             
-            nargs = fnc.func_code.co_argcount
-            names = list(fnc.func_code.co_varnames)[:nargs]
+            nargs = fnc.__code__.co_argcount
+            names = list(fnc.__code__.co_varnames)[:nargs]
             if hasattr(fnc,'im_class'): names.pop(0)
             
             args = []

@@ -151,7 +151,7 @@ class Game:
         <p>return a True value if the event is captured and does not need to be passed onto the current
         state</p>
         """
-        if e.type is QUIT: 
+        if e.type == QUIT:
             self.state = Quit(self)
             return 1
 

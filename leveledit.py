@@ -67,7 +67,7 @@ return - toggle fullscreen
 
 import os,sys    
 from optparse import OptionParser
-from ConfigParser import ConfigParser
+import configparser
 import pygame
 from pygame.locals import *
 
@@ -81,7 +81,7 @@ from pgu import gui, html, tilevid, isovid, hexvid
 
 #whatever...
 ini_fname = "leveledit.ini"
-ini = ConfigParser()
+ini = configparser.ConfigParser()
 cfg = {}
 
 class _app(gui.Container):
@@ -149,7 +149,7 @@ class _app(gui.Container):
             # we check to see if the ctime is the same.
 
             newctime = os.stat(self.tiles_fname)[9]
-            if newctime <= self.tiles_last_ctime:
+            if self.tiles_last_ctime != None and newctime <= self.tiles_last_ctime:
                 #nothing to do, so we return.
                 return
 
@@ -165,7 +165,7 @@ class _app(gui.Container):
         self.codes_fname = cfg['codes']
         if os.path.isfile(self.codes_fname):
             newctime = os.stat(self.codes_fname)[9]
-            if newctime <= self.codes_last_ctime:
+            if self.tiles_last_ctime != None and newctime <= self.codes_last_ctime:
                 #nothing to do, so we return.
                 return
             self.codes_last_ctime = newctime
@@ -179,7 +179,7 @@ class _app(gui.Container):
 
         
         tmp = self.level.tiles
-        self.level.tiles = [None for i in xrange(0,256)]
+        self.level.tiles = [None for i in range(0,256)]
         self.level.tga_load_tiles(self.codes,(self.tile_w,self.tile_h))
         self.level.codes = self.level.tiles
         self.level.tiles = tmp
@@ -318,7 +318,7 @@ def hex_image(self):
     if not hasattr(self,'tiles_h'): self.tiles_h = 256
     rimg = pygame.Surface((self.tiles_w,self.tiles_h)).convert_alpha()
     rimg.fill((0,0,0,0))
-    w,h = self.tiles_w / self.tile_w, self.tiles_h / self.tile_h
+    w,h = self.tiles_w // self.tile_w, self.tiles_h // self.tile_h
     n = 0
     fnt = pygame.font.SysFont("helvetica",self.tile_h-1)
     for y in range(0,h):
@@ -344,15 +344,15 @@ class tpicker(gui.Widget):
     def paint(self,s):
         s.fill((128,128,128))
         s.blit(app.tiles,(0,0))
-        w = app.tiles_w/app.tile_w
-        x,y = app.tile%w,app.tile/w
+        w = app.tiles_w//app.tile_w
+        x,y = app.tile%w,app.tile//w
         off = x*app.tile_w,y*app.tile_h
         pygame.draw.rect(s,(255,255,255),(off[0],off[1],app.tile_w,app.tile_h),2)
         
     def event(self,e):
         if (e.type is MOUSEBUTTONDOWN and e.button == 1) or (e.type is MOUSEMOTION and e.buttons[0] == 1 and self.container.myfocus == self):
-            w = app.tiles_w/app.tile_w
-            x,y = e.pos[0]/app.tile_w,e.pos[1]/app.tile_h
+            w = app.tiles_w//app.tile_w
+            x,y = e.pos[0]//app.tile_w,e.pos[1]//app.tile_h
             n = x+y*w
             self.set(n)
             if app.mode not in ('tile','bkgr'):
@@ -372,15 +372,15 @@ class cpicker(gui.Widget):
     def paint(self,s):
         s.fill((128,128,128))
         s.blit(app.codes,(0,0))
-        w = app.codes_w/app.tile_w
-        x,y = app.code%w,app.code/w
+        w = app.codes_w//app.tile_w
+        x,y = app.code%w,app.code//w
         off = x*app.tile_w,y*app.tile_h
         pygame.draw.rect(s,(255,255,255),(off[0],off[1],app.tile_w,app.tile_h),2)
         
     def event(self,e):
         if (e.type is MOUSEBUTTONDOWN and e.button == 1) or (e.type is MOUSEMOTION and e.buttons[0] == 1 and self.container.myfocus == self):
-            w = app.codes_w/app.tile_w
-            x,y = e.pos[0]/app.tile_w,e.pos[1]/app.tile_h
+            w = app.codes_w//app.tile_w
+            x,y = e.pos[0]//app.tile_w,e.pos[1]//app.tile_h
             n = x+y*w
             self.set(n)
             app.tools['code'].click()
@@ -411,10 +411,10 @@ class vwrap(gui.Table):
         for x,y in corners:
             minx,miny,maxx,maxy = min(minx,x),min(miny,y),max(maxx,x),max(maxy,y)
 
-        minx -= w/2
-        maxx -= w/2
-        miny -= h/2
-        maxy -= h/2
+        minx -= w//2
+        maxx -= w//2
+        miny -= h//2
+        maxy -= h//2
         
         self.vs = e = gui.VSlider(0,miny,maxy,sw*4,width=sw,height=h-sw)
         self.add(e,1,0)
@@ -455,17 +455,17 @@ class vdraw(gui.Widget):
         s = pygame.Surface((self.rect.w,self.rect.h))
         clrs = [(148,148,148),(108,108,108)]
         inc = 7
-        for y in range(0,self.rect.w/inc):
-            for x in range(0,self.rect.h/inc):
+        for y in range(0,self.rect.w//inc):
+            for x in range(0,self.rect.h//inc):
                 s.fill(clrs[(x+y)%2],(x*inc,y*inc,inc,inc))
         self.bg = s
 
         s = pygame.Surface((self.rect.w,self.rect.h)).convert_alpha()
         s.fill((0,0,0,0))
         for x in range(0,app.view_w):
-            pygame.draw.line(s,(0,0,0),(self.rect.w*x/app.view_w,0),(self.rect.w*x/app.view_w,self.rect.h))
+            pygame.draw.line(s,(0,0,0),(self.rect.w*x//app.view_w,0),(self.rect.w*x//app.view_w,self.rect.h))
         for y in range(0,app.view_h):
-            pygame.draw.line(s,(0,0,0),(0,self.rect.h*y/app.view_h),(self.rect.w,self.rect.h*y/app.view_h))
+            pygame.draw.line(s,(0,0,0),(0,self.rect.h*y//app.view_h),(self.rect.w,self.rect.h*y//app.view_h))
         self.grid = s
         
         self.pos = 0,0
@@ -647,7 +647,7 @@ class vdraw(gui.Widget):
             self.repaint()
         return tx,ty
         
-        x,y = e.pos[0]/app.tile_w,e.pos[1]/app.tile_h
+        x,y = e.pos[0]//app.tile_w,e.pos[1]//app.tile_h
         x = min(max(0,x),app.view_w-1)
         y = min(max(0,y),app.view_h-1)
         return x,y
@@ -659,7 +659,7 @@ class vdraw(gui.Widget):
         
         w = app.tile_w
         h = app.tile_h
-        x,y = (e.pos[0]+w/2)/app.tile_w,(e.pos[1]+h/2)/app.tile_h
+        x,y = (e.pos[0]+w//2)//app.tile_w,(e.pos[1]+h//2)//app.tile_h
         x = min(max(0,x),app.view_w)
         y = min(max(0,y),app.view_h)
         return x,y
@@ -712,7 +712,7 @@ def cmd_copy(value):
     #app.clipboard.fill((0,0,0,0))
     #app.clipboard.blit(s,(0,0))
     
-    print app.clipboard.get_at((0,0))
+    #print app.clipboard.get_at((0,0))
     
 def cmd_paste(value):
     if app.clipboard != None:
@@ -762,7 +762,7 @@ def _cmd_new(value):
             cfg['tiles'] = tiles
             cfg['class'] = klass
             ok = 1
-        except Exception, v:
+        except (Exception) as v:
             ErrorDialog("New failed.",v).open()
         if ok:
             raise Restart()
@@ -796,7 +796,7 @@ def _cmd_open(value):
 
             
             ok = 1
-        except Exception,v:
+        except (Exception) as v:
             ErrorDialog("Open failed.",v).open()
             
         if ok: raise Restart()
@@ -859,8 +859,8 @@ def cmd_pick(value):
     
     
     if (mods&KMOD_SHIFT) != 0:
-        app.level.view.x += dx*app.vdraw.rect.w/8
-        app.level.view.y += dy*app.vdraw.rect.h/8
+        app.level.view.x += dx*app.vdraw.rect.w//8
+        app.level.view.y += dy*app.vdraw.rect.h//8
         app.vdraw.repaint()
         #x,y = app.view.get_offset()
         #x = x + 1*dx
@@ -882,7 +882,7 @@ def cmd_pick(value):
         
     
     else:
-        w = app.tiles_w/app.tile_w
+        w = app.tiles_w//app.tile_w
         if app.mode == 'code':
             n = app.code + dx + dy*w
             app.cpicker.set(n)
@@ -913,7 +913,7 @@ def cmd_save(value):
         cfg_to_ini(['class','codes','tiles','tile_w','tile_h'],app.fname)
         ini_save()
         app.dirty = 0
-    except Exception, v:
+    except (Exception) as v:
         ErrorDialog("Save failed.",v).open()
         return
 
@@ -925,8 +925,8 @@ def cmd_preview(value):
     # The Windows version of Python does not put itself in the PATH, but
     # this should work instead:
     if sys.platform.lower() == 'win32':
-	cmd = "preview.py _preview.tga"
-    print cmd
+        cmd = "preview.py _preview.tga"
+    print(cmd)
     os.system(cmd)
     
 def cmd_quit(value):
@@ -1145,9 +1145,8 @@ def init_ini():
     ini.read([ini_fname])
 
 def ini_save():
-    f = open(ini_fname,"wb")
-    ini.write(f)
-    f.close()
+    with open(ini_fname, 'w') as configfile:
+        ini.write(configfile)
 
 
 def init_opts():

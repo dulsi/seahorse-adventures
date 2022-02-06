@@ -1,6 +1,6 @@
 """a html renderer
 """
-import htmllib
+import html.parser
 import re
 import pygame
 from pygame.locals import *
@@ -44,7 +44,7 @@ class _hr(gui.Color):
         #print self.rect
         #self.rect.w = 1
 
-class _html(htmllib.HTMLParser):
+class _html(html.parser.HTMLParser):
     def init(self,doc,font,color,_globals,_locals):
         self.mystack = []
         self.document = doc
@@ -378,7 +378,7 @@ class _html(htmllib.HTMLParser):
         r = self.attrs_to_map(attrs)
         params = self.map_to_params(r)
         params['style']['padding'] = h
-        print params
+        print(params)
 
         self.item.block(0)
         self.item.add(_hr(**params))
@@ -408,7 +408,7 @@ class _html(htmllib.HTMLParser):
             else:
                 self.item.add(w)
         except:
-            print 'handle_image: missing %s'%src
+            print('handle_image: missing %s'%src)
                 
     def handle_data(self,txt):
         if self.type == 'table': return 
@@ -468,7 +468,7 @@ class HTML(gui.Document):
         self._locals = _locals
         
         #font = gui.theme.get("label","","font")
-        p = _html(htmllib.AS_IS,0)
+        p = _html(html.parser.AS_IS,0)
         p.init(self,self.style.font,self.style.color,_globals,_locals)
         p.feed(data) 
         p.close() 

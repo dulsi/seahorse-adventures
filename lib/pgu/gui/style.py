@@ -36,7 +36,7 @@ Style_cache = {}
 def Style_get(cls,pcls,k):
     key = cls,pcls,k
     if key not in Style_cache:
-        import app
+        from . import app
         Style_cache[key] = app.App.app.theme.get(cls,pcls,k)
     return Style_cache[key]
         

@@ -116,23 +116,23 @@ class Menu(engine.State):
         self.frame += 1
             
     def event(self,e):
-        if e.type is USEREVENT and e.action == 'down':
+        if e.type == USEREVENT and e.action == 'down':
             self.cur = (self.cur+1)%len(self.items)
             self.repaint()
-        elif e.type is USEREVENT and e.action == 'up':
+        elif e.type == USEREVENT and e.action == 'up':
             self.cur = (self.cur-1+len(self.items))%len(self.items)
             self.repaint()
-        elif e.type is USEREVENT and e.action == 'left':
+        elif e.type == USEREVENT and e.action == 'left':
             self.game.lcur = (self.game.lcur-1+len(self.levels))%len(self.levels)
             self.cur = 1
             self.repaint()
-        elif e.type is USEREVENT and e.action == 'right':
+        elif e.type == USEREVENT and e.action == 'right':
             self.game.lcur = (self.game.lcur+1)%len(self.levels)
             self.cur = 1
             self.repaint()
-        elif e.type is USEREVENT and e.action == 'exit':
+        elif e.type == USEREVENT and e.action == 'exit':
             return engine.Quit(self.game)
-        elif e.type is USEREVENT and (e.action == 'menu' or e.action == 'jump'):
+        elif e.type == USEREVENT and (e.action == 'menu' or e.action == 'jump'):
             text,value = self.items[self.cur]
             if value == 'start':
                 self.game.init_play()
@@ -151,7 +151,7 @@ class Menu(engine.State):
                 return Transition(self.game,Credits(self.game,self))
             elif value == 'help':
                 return Transition(self.game,Help(self.game,self))
-        elif e.type is KEYDOWN and e.key == K_d:
+        elif e.type == KEYDOWN and e.key == K_d:
             self.debug_mode()
     
 class Transition(engine.State):
@@ -230,7 +230,7 @@ class Intro(engine.State):
             return Transition(self.game,Intro2(self.game,self.next))
         
     def event(self,e):
-        if e.type is KEYDOWN or (e.type is USEREVENT and e.action in ('jump','bubble','menu','exit')):
+        if e.type == KEYDOWN or (e.type == USEREVENT and e.action in ('jump','bubble','menu','exit')):
             return Transition(self.game,self.next)
         
     def paint(self,screen):
@@ -289,7 +289,7 @@ class Intro2(engine.State):
             return Transition(self.game,self.next)
     
     def event(self,e):
-        if e.type is KEYDOWN or (e.type is USEREVENT and e.action in ('jump','bubble','menu','exit')):
+        if e.type == KEYDOWN or (e.type == USEREVENT and e.action in ('jump','bubble','menu','exit')):
             return Transition(self.game,self.next)
         
     def paint(self,screen):
@@ -320,9 +320,9 @@ class Prompt(engine.State):
         self.bkgr = self.game.screen.convert()
         
     def event(self,e):
-        if e.type is KEYDOWN and e.key == K_y:
+        if e.type == KEYDOWN and e.key == K_y:
             return self.yes
-        if e.type is KEYDOWN and e.key == K_n:
+        if e.type == KEYDOWN and e.key == K_n:
             return self.no
         
     def paint(self,screen):
@@ -349,7 +349,7 @@ class Pause(engine.State):
         self.bkgr = self.game.screen.convert()
         
     def event(self,e):
-        if e.type is KEYDOWN or (e.type is USEREVENT and e.action in ('jump','bubble','menu','exit')):
+        if e.type == KEYDOWN or (e.type == USEREVENT and e.action in ('jump','bubble','menu','exit')):
             return self.next
         
     def paint(self,screen):
@@ -386,7 +386,7 @@ class Credits(engine.State):
             #return Transition(self.game,Intro2(self.game,self.next))
         
     def event(self,e):
-        if e.type is KEYDOWN or (e.type is USEREVENT and e.action in ('jump','bubble','menu','exit')):
+        if e.type == KEYDOWN or (e.type == USEREVENT and e.action in ('jump','bubble','menu','exit')):
             return Transition(self.game,self.next)
         
     def paint(self,screen):
@@ -439,7 +439,7 @@ class Help(engine.State):
             #return Transition(self.game,Intro2(self.game,self.next))
         
     def event(self,e):
-        if e.type is KEYDOWN or (e.type is USEREVENT and e.action in ('jump','bubble','menu','exit')):
+        if e.type == KEYDOWN or (e.type == USEREVENT and e.action in ('jump','bubble','menu','exit')):
             return Transition(self.game,self.next)
         
     def paint(self,screen):

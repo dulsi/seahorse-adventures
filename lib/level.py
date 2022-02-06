@@ -415,8 +415,8 @@ class Level:
         
     
     def event(self,e):
-        #if e.type is KEYDOWN and e.key in (K_ESCAPE,):
-        if e.type is USEREVENT and e.action == 'exit':
+        #if e.type == KEYDOWN and e.key in (K_ESCAPE,):
+        if e.type == USEREVENT and e.action == 'exit':
             next = menu.Transition(self.game,self.parent)
             return menu.Prompt(self.game,'quit? y/n',next,self)
         

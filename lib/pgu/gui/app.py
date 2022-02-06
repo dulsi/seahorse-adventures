@@ -3,8 +3,8 @@
 import pygame
 from pygame.locals import *
 
-import container
-from const import *
+from . import container
+from .const import *
 
 class App(container.Container):
     """The top-level widget for an application.

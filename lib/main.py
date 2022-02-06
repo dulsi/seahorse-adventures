@@ -254,13 +254,13 @@ class Game(engine.Game):
                     self.input.down = True
                 if e.value < 0.4:
                     self.input.down = False
-        if e.type is KEYDOWN and e.key in EXIT_KEYS:
+        if e.type == KEYDOWN and e.key in EXIT_KEYS:
             action = 'exit'
-        elif e.type is JOYBUTTONDOWN and e.button in EXIT_BUTTONS:
+        elif e.type == JOYBUTTONDOWN and e.button in EXIT_BUTTONS:
             action = 'exit'
-        elif e.type is KEYDOWN and e.key in MENU_KEYS:
+        elif e.type == KEYDOWN and e.key in MENU_KEYS:
             action = 'menu'
-        elif e.type is JOYBUTTONDOWN and e.button in MENU_BUTTONS:
+        elif e.type == JOYBUTTONDOWN and e.button in MENU_BUTTONS:
             action = 'menu'
         
         if action != None:
@@ -269,16 +269,16 @@ class Game(engine.Game):
             self.fnc('event', event)
             return True
             
-        if e.type is QUIT: 
+        if e.type == QUIT: 
             self.state = engine.Quit(self)
             return 1
         
-        #if e.type is KEYDOWN and e.key == K_ESCAPE:
+        #if e.type == KEYDOWN and e.key == K_ESCAPE:
             #self.state = engine.Quit(self)
             #return 1
             
         
-        if e.type is KEYDOWN and e.key == K_F4: #K_F12:
+        if e.type == KEYDOWN and e.key == K_F4: #K_F12:
             
             try:
                 dname = '.'

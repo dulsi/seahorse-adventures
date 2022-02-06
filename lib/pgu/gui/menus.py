@@ -1,8 +1,8 @@
 """
 """
-from const import *
-import table
-import basic, button
+from .const import *
+from . import table
+from . import basic, button
 
 class _Menu_Options(table.Table):
     def __init__(self,menu,**params):

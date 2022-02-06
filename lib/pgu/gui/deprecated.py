@@ -1,27 +1,27 @@
 import pygame
 
-from const import *
-import table
-import group
-import button, basic
+from .const import *
+from . import table
+from . import group
+from . import button, basic
 
 def action_open(value):
-    print 'gui.action_open',"Scheduled to be deprecated."
+    print('gui.action_open',"Scheduled to be deprecated.")
     value.setdefault('x',None)
     value.setdefault('y',None)
     value['container'].open(value['window'],value['x'],value['y'])
 
 def action_setvalue(value):
-    print 'gui.action_setvalue',"Scheduled to be deprecated."
+    print('gui.action_setvalue',"Scheduled to be deprecated.")
     a,b = value
     b.value = a.value
 
 def action_quit(value):
-    print 'gui.action_quit',"Scheduled to be deprecated."
+    print('gui.action_quit',"Scheduled to be deprecated.")
     value.quit()
 
 def action_exec(value):
-    print 'gui.action_exec',"Scheduled to be deprecated."
+    print('gui.action_exec',"Scheduled to be deprecated.")
     exec(value['script'],globals(),value['dict'])
 
 class Toolbox(table.Table):
@@ -40,7 +40,7 @@ class Toolbox(table.Table):
         self.send(CHANGE)
     
     def __init__(self,data,cols=0,rows=0,tool_cls='tool',value=None,**params):
-        print 'gui.Toolbox','Scheduled to be deprecated.'
+        print('gui.Toolbox','Scheduled to be deprecated.')
         params.setdefault('cls','toolbox')
         table.Table.__init__(self,**params)
         
@@ -59,7 +59,7 @@ class Toolbox(table.Table):
         x,y,p,s = 0,0,None,1
         for ico,value in data:
             #from __init__ import theme
-            import app
+            from . import app
             img = app.App.app.theme.get(tool_cls+"."+ico,"","image")
             if img:
                 i = basic.Image(img)

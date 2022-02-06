@@ -11,11 +11,11 @@
 import pygame
 from pygame.locals import *
 
-from const import *
-import widget
-import app
-import table
-import basic
+from .const import *
+from . import widget
+from . import app
+from . import table
+from . import basic
 
 _SLIDER_HORIZONTAL = 0
 _SLIDER_VERTICAL = 1
@@ -72,7 +72,7 @@ class _slider(widget.Widget):
                 else:
                     x,y,adj = e.pos[0],e.pos[1],1
                     
-        elif e.type is KEYDOWN:
+        elif e.type == KEYDOWN:
             if self.orient == _SLIDER_HORIZONTAL and e.key == K_LEFT:
                 self.value -= self.step
                 used = True

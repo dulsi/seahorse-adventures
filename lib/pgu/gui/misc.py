@@ -1,6 +1,6 @@
-from const import *
-import widget
-import app
+from .const import *
+from . import widget
+from . import app
 
 class ProgressBar(widget.Widget):
     """A progress bar.
@@ -27,7 +27,7 @@ class ProgressBar(widget.Widget):
     
     def paint(self,s):
         r = pygame.rect.Rect(0,0,self.rect.w,self.rect.h)
-        r.w = r.w*(self.value-self.min)/(self.max-self.min)
+        r.w = r.w*(self.value-self.min)//(self.max-self.min)
         self.bar = r
         app.App.app.theme.render(s,self.style.bar,r)
         

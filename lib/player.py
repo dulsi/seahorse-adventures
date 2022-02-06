@@ -56,16 +56,16 @@ def event(g,s,e):
     if s.death_counter >= 0:
         return
     
-    if e.type is USEREVENT and e.action == 'jump' and s.standing != None and s.jumping == 0 and s.vy == 0:
+    if e.type == USEREVENT and e.action == 'jump' and s.standing != None and s.jumping == 0 and s.vy == 0:
         sprite.stop_standing(g,s)
         #s.vy = -1.8
         s.vy = -0.5
         s.jumping = 1.4
         g.game.sfx['jump'].play()
-    if e.type is USEREVENT and e.action == 'stop-jump':
+    if e.type == USEREVENT and e.action == 'stop-jump':
         s.jumping = 0
         
-    if e.type is USEREVENT and (e.action == 'up' or e.action == 'down'):
+    if e.type == USEREVENT and (e.action == 'up' or e.action == 'down'):
         if sprite.get_code(g,s,0,0) in DOOR_CODES:
             s.vx = 0
             s.vy = 0
@@ -77,18 +77,18 @@ def event(g,s,e):
             s.door_pos = s.rect.centerx//TW,s.rect.centery//TH
             #tiles.t_put(g,(x,y), 0x32)
             #tiles.t_put(g,(x,y-1), 0x22)
-    if e.type is USEREVENT and e.action == 'bubble':
+    if e.type == USEREVENT and e.action == 'bubble':
         if s.powered_up:
             sprites.bubble.init(g,s.rect,s,big=True)
         else:
             sprites.bubble.init(g,s.rect,s,big=False)
         s.shooting = 10
         
-    if e.type is KEYDOWN and e.key == K_F10:
+    if e.type == KEYDOWN and e.key == K_F10:
         powerup(g,s)
         s.god_mode = True
         
-    #if e.type is KEYDOWN and e.key == K_F12:
+    #if e.type == KEYDOWN and e.key == K_F12:
         #1/0
         
         
