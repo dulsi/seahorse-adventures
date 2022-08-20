@@ -15,6 +15,7 @@
 		</p>
 	</description>
 	<url type="homepage">http://www.imitationpickles.org/barbie/</url>
+	<url type="bugtracker">https://github.com/dulsi/seahorse-adventures/issues</url>
 	<screenshots>
 		<screenshot type="default">http://www.imitationpickles.org/barbie/content/jungle.png</screenshot>
 		<screenshot>http://www.imitationpickles.org/barbie/content/volcano.png</screenshot>
